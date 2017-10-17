@@ -10,7 +10,7 @@ set -x
 
 # Run unit tests and calculate code coverage.
 coverage run \
-  --source ketohub \
+  --source downloader \
   -m unittest discover
 
 # Check that source has correct formatting.
@@ -21,4 +21,4 @@ pyflakes $(find ./ -type f -name '*.py' | xargs)
 
 # Check docstrings for style consistency.
 PYTHONPATH=$PYTHONPATH:$(pwd)/third_party/docstringchecker \
-  pylint --reports=n ketohub tests
+  pylint --reports=n downloader tests
