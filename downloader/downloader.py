@@ -9,14 +9,6 @@ import urllib2
 logger = logging.getLogger(__name__)
 
 
-class Error(Exception):
-    pass
-
-
-class UnexpectedImageType(Error):
-    pass
-
-
 def configure_logging():
     root_logger = logging.getLogger()
     handler = logging.StreamHandler()
@@ -46,22 +38,6 @@ def _write_to_file(filepath, content):
     open(filepath, 'wb').write(content)
 
 
-def _download_image_data(image_url):
-    image_handle = urllib2.urlopen(
-        urllib2.Request(
-            image_url,
-            headers={
-                'User-Agent':
-                ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
-                 'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 '
-                 'Safari/537.36')
-            }))
-    if image_handle.info().type != 'image/jpeg':
-        raise UnexpectedImageType('Expected image/jpeg, got ' +
-                                  image_handle.info().type)
-    return image_handle.read()
-
-
 def _download_image_urls(url_dict, output_root):
     download_queue = Queue.Queue()
 
@@ -88,7 +64,7 @@ def _download_image_urls(url_dict, output_root):
 
         try:
             _write_to_file(item['destination'],
-                           _download_image_data(item['url']))
+                           url.download_image_data(item['url']))
             download_delay = max(download_delay - 1.0, 2.0)
         except urllib2.HTTPError as e:
             logger.warn('Got error trying to download %s: %s', item['url'], e)
@@ -102,13 +78,8 @@ def _download_image_urls(url_dict, output_root):
         time.sleep(download_delay)
 
 
-def dummy():
-    pass
-
-
 def main(args):
     configure_logging()
-    dummy()
     with open(args.input_file) as input_file:
         url_dict = _parse_input_file(input_file)
     logger.info('Read %d input URLs', len(url_dict))
