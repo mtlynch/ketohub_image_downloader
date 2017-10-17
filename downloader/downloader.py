@@ -1,10 +1,11 @@
 import argparse
-import json
 import logging
 import os
 import Queue
 import time
-import urllib2
+
+import input_file
+import url
 
 logger = logging.getLogger(__name__)
 
@@ -18,14 +19,6 @@ def configure_logging():
     handler.setFormatter(formatter)
     root_logger.addHandler(handler)
     root_logger.setLevel(logging.INFO)
-
-
-def _parse_input_file(input_file):
-    raw = json.load(input_file)
-    url_dict = {}
-    for key, recipe_data in raw.iteritems():
-        url_dict[key] = recipe_data['mainImage']
-    return url_dict
 
 
 def _ensure_directory_exists(directory_path):
@@ -80,8 +73,8 @@ def _download_image_urls(url_dict, output_root):
 
 def main(args):
     configure_logging()
-    with open(args.input_file) as input_file:
-        url_dict = _parse_input_file(input_file)
+    with open(args.input_file) as input_file_handle:
+        url_dict = input_file.parse(input_file_handle)
     logger.info('Read %d input URLs', len(url_dict))
     _download_image_urls(url_dict, args.output_root)
 
