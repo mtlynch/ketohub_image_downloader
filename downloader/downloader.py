@@ -6,7 +6,7 @@ import time
 import urllib2
 
 import input_file
-import url as url_downloader
+import url_downloader
 
 logger = logging.getLogger(__name__)
 
