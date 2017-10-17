@@ -3,9 +3,10 @@ import logging
 import os
 import Queue
 import time
+import urllib2
 
 import input_file
-import url
+import url as url_downloader
 
 logger = logging.getLogger(__name__)
 
@@ -57,7 +58,7 @@ def _download_image_urls(url_dict, output_root):
 
         try:
             _write_to_file(item['destination'],
-                           url.download_image_data(item['url']))
+                           url_downloader.download_image_data(item['url']))
             download_delay = max(download_delay - 1.0, 2.0)
         except urllib2.HTTPError as e:
             logger.warn('Got error trying to download %s: %s', item['url'], e)
