@@ -10,12 +10,12 @@ class ImagesTest(unittest.TestCase):
 
     def setUp(self):
         mock_urlopen_patch = mock.patch(
-            'downloader.url.urllib2.urlopen', autospec=True)
+            'downloader.url_downloader.urllib2.urlopen', autospec=True)
         self.addCleanup(mock_urlopen_patch.stop)
         self.mock_urlopen = mock_urlopen_patch.start()
 
         mock_request_patch = mock.patch(
-            'downloader.url.urllib2.Request', autospec=True)
+            'downloader.url_downloader.urllib2.Request', autospec=True)
         self.addCleanup(mock_request_patch.stop)
         self.mock_request = mock_request_patch.start()
 

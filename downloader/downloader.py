@@ -8,9 +8,6 @@ import urllib2
 import input_file
 import url_downloader
 
-import input_file
-import url as url_downloader
-
 logger = logging.getLogger(__name__)
 
 
