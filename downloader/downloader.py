@@ -69,6 +69,9 @@ def _download_image_urls(url_dict, output_root):
                 download_delay = min(30.0, download_delay * 1.75)
             else:
                 raise
+        except url_downloader.UnexpectedImageType as e:
+            logger.warn('Unexpected image trying to download %s: %s',
+                        item['url'], e)
         time.sleep(download_delay)
 
 
