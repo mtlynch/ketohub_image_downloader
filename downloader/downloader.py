@@ -77,6 +77,8 @@ def _download_image_urls(url_dict, output_root):
 
 def main(args):
     configure_logging()
+    logger.info('--input_file=%s', args.input_file)
+    logger.info('--output_root=%s', args.output_root)
     with open(args.input_file) as input_file_handle:
         url_dict = input_file.parse(input_file_handle)
     logger.info('Read %d input URLs', len(url_dict))
