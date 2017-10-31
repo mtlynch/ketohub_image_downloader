@@ -84,6 +84,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         prog='KetoHub Image Downloader',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('-i', '--input_file')
-    parser.add_argument('-o', '--output_root')
+    parser.add_argument('-i', '--input_file', required=True)
+    parser.add_argument('-o', '--output_root', required=True)
     main(parser.parse_args())
