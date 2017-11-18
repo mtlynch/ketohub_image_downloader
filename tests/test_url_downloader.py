@@ -36,7 +36,7 @@ class ImagesTest(unittest.TestCase):
 
     def test_download_fails_when_content_type_is_not_jpeg(self):
         mock_handle = mock.Mock()
-        mock_handle.info.return_value = mock.Mock(type='image/png')
+        mock_handle.info.return_value = mock.Mock(type='image/faketype')
         mock_handle.read.return_value = 'dummy image data'
         self.mock_urlopen.return_value = mock_handle
         with self.assertRaises(url_downloader.UnexpectedImageType):
