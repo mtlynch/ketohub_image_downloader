@@ -16,7 +16,7 @@ class UnexpectedImageType(Error):
 def download_image_data(image_url):
     image_handle = urllib2.urlopen(
         urllib2.Request(image_url, headers={'User-Agent': _USER_AGENT}))
-    if image_handle.info().type != 'image/jpeg':
-        raise UnexpectedImageType('Expected image/jpeg, got ' +
+    if image_handle.info().type not in ['image/jpeg', 'image/png']:
+        raise UnexpectedImageType('Unexpected image type: ' +
                                   image_handle.info().type)
     return image_handle.read()
