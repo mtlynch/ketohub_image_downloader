@@ -6,7 +6,7 @@ import mock
 from downloader import url_downloader
 
 
-class ImagesTest(unittest.TestCase):
+class UrlDownloaderTest(unittest.TestCase):
 
     def setUp(self):
         mock_urlopen_patch = mock.patch(
@@ -27,6 +27,21 @@ class ImagesTest(unittest.TestCase):
         self.assertEqual(
             url_downloader.download_image_data('http://mock.com/image.jpg'),
             'dummy image data')
+        self.assertEqual('http://mock.com/image.jpg',
+                         self.mock_request.call_args[0][0])
+
+    def test_encodes_special_characters(self):
+        mock_handle = mock.Mock()
+        mock_handle.info.return_value = mock.Mock(type='image/jpeg')
+        mock_handle.read.return_value = 'dummy image data'
+        self.mock_urlopen.return_value = mock_handle
+        self.assertEqual(
+            url_downloader.download_image_data(
+                u'https://lowcarbyum.com/wp-content/uploads/2017/12/atkins-cafe\u0301-caramel-shake-breakfast-muffins-fb.jpg'
+            ), 'dummy image data')
+        self.assertEqual(
+            'https://lowcarbyum.com/wp-content/uploads/2017/12/atkins-cafe%CC%81-caramel-shake-breakfast-muffins-fb.jpg',
+            self.mock_request.call_args[0][0])
 
     def test_download_fails_when_server_returns_403(self):
         self.mock_urlopen.side_effect = urllib2.HTTPError(
