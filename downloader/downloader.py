@@ -45,8 +45,8 @@ def _process_download_jobs(job_list):
         logger.info('%d jobs left in queue', download_queue.qsize())
         job = download_queue.get()
         if job.attempts() > 5:
-            logger.error('Tried to download %s %d times, giving up.',
-                         job.url(), job.attempts())
+            logger.error('Tried to download %s %d times, giving up.', job.url(),
+                         job.attempts())
             continue
         logger.info('Downloading %s', job.url())
 
@@ -64,8 +64,8 @@ def _process_download_jobs(job_list):
             else:
                 raise
         except url_downloader.UnexpectedImageType as e:
-            logger.warn('Unexpected image trying to download %s: %s',
-                        job.url(), e)
+            logger.warn('Unexpected image trying to download %s: %s', job.url(),
+                        e)
         time.sleep(download_delay)
 
 
