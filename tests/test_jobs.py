@@ -30,26 +30,26 @@ class FromUrlDictTest(unittest.TestCase):
         self.assertEqual(job_a.attempts(), job_b.attempts())
 
     def test_builds_job_list(self):
-        job_list = jobs.from_url_dict({
-            'foo-key':
-            'https://mock.com/image-foo.jpg',
-            'bar-key':
-            'https://bar-page.com/image2.png',
-            'baz-key':
-            'https://wizzbang.com/bang.jpeg',
-            'fwop-key':
-            'https://qwer.com/img',
-        }, '/dummypath/')
+        job_list = jobs.from_url_dict(
+            {
+                'foo-key': 'https://mock.com/image-foo.jpg',
+                'bar-key': 'https://bar-page.com/image2.png',
+                'baz-key': 'https://wizzbang.com/bang.jpeg',
+                'fwop-key': 'https://qwer.com/img',
+            }, '/dummypath/')
         job_list.sort(key=lambda j: j.url())
-        self.assertJobsEqual(job_list[0],
-                             jobs.Job('https://bar-page.com/image2.png',
-                                      '/dummypath/bar-key.png'))
-        self.assertJobsEqual(job_list[1],
-                             jobs.Job('https://mock.com/image-foo.jpg',
-                                      '/dummypath/foo-key.jpg'))
-        self.assertJobsEqual(job_list[2],
-                             jobs.Job('https://qwer.com/img',
-                                      '/dummypath/fwop-key.jpg'))
-        self.assertJobsEqual(job_list[3],
-                             jobs.Job('https://wizzbang.com/bang.jpeg',
-                                      '/dummypath/baz-key.jpeg'))
+        self.assertJobsEqual(
+            job_list[0],
+            jobs.Job('https://bar-page.com/image2.png',
+                     '/dummypath/bar-key.png'))
+        self.assertJobsEqual(
+            job_list[1],
+            jobs.Job('https://mock.com/image-foo.jpg',
+                     '/dummypath/foo-key.jpg'))
+        self.assertJobsEqual(
+            job_list[2],
+            jobs.Job('https://qwer.com/img', '/dummypath/fwop-key.jpg'))
+        self.assertJobsEqual(
+            job_list[3],
+            jobs.Job('https://wizzbang.com/bang.jpeg',
+                     '/dummypath/baz-key.jpeg'))
