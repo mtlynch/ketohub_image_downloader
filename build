@@ -2,11 +2,14 @@
 #
 # Build steps to validate the ketohub raw input spider.
 
-# Exit build script on first failure
+# Exit build script on first failure.
 set -e
 
 # Echo commands to stdout.
 set -x
+
+# Treat undefined variables as errors.
+set -u
 
 # Delete pyc files from previous builds.
 find . -name "*.pyc" -delete
