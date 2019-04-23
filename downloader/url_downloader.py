@@ -16,8 +16,8 @@ class UnexpectedImageType(Error):
 
 def download_image_data(image_url):
     image_handle = urllib2.urlopen(
-        urllib2.Request(
-            _encode_url(image_url), headers={'User-Agent': _USER_AGENT}))
+        urllib2.Request(_encode_url(image_url),
+                        headers={'User-Agent': _USER_AGENT}))
     if image_handle.info().type not in ['image/jpeg', 'image/png']:
         raise UnexpectedImageType('Unexpected image type: ' +
                                   image_handle.info().type)
@@ -28,5 +28,5 @@ def _encode_url(url):
     scheme, network_location, path, query, fragment_identifier = urlparse.urlsplit(
         url)
     path = urllib2.quote(path.encode('utf8'))
-    return urlparse.urlunsplit((scheme, network_location, path, query,
-                                fragment_identifier))
+    return urlparse.urlunsplit(
+        (scheme, network_location, path, query, fragment_identifier))

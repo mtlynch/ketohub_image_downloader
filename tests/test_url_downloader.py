@@ -44,8 +44,11 @@ class UrlDownloaderTest(unittest.TestCase):
             self.mock_request.call_args[0][0])
 
     def test_download_fails_when_server_returns_403(self):
-        self.mock_urlopen.side_effect = urllib2.HTTPError(
-            url='', code=404, msg='', hdrs=None, fp=None)
+        self.mock_urlopen.side_effect = urllib2.HTTPError(url='',
+                                                          code=404,
+                                                          msg='',
+                                                          hdrs=None,
+                                                          fp=None)
         with self.assertRaises(urllib2.HTTPError):
             url_downloader.download_image_data('http://mock.com/image.jpg')
 
