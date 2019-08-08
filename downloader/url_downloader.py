@@ -5,6 +5,8 @@ _USER_AGENT = (
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
     'Chrome/61.0.3163.100 Safari/537.36')
 
+_SUPPORTED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp']
+
 
 class Error(Exception):
     pass
@@ -18,7 +20,7 @@ def download_image_data(image_url):
     image_handle = urllib2.urlopen(
         urllib2.Request(_encode_url(image_url),
                         headers={'User-Agent': _USER_AGENT}))
-    if image_handle.info().type not in ['image/jpeg', 'image/png']:
+    if image_handle.info().type not in _SUPPORTED_IMAGE_TYPES:
         raise UnexpectedImageType('Unexpected image type: ' +
                                   image_handle.info().type)
     return image_handle.read()
