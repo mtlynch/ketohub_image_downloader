@@ -5,5 +5,5 @@ pyflakes==2.1.1
 # to stop producing errors on bad docstrings.
 # DocStringChecker currently only works with pylint 1.6.5. Upgrading causes it
 # to stop producing errors on bad docstrings.
-pylint==1.6.5
+pylint==4.0.9
 yapf==0.27.0
